@@ -1,0 +1,51 @@
+﻿@**@
+
+@**@
+@model UserLoginSystem.ViewModels.LoginViewModel
+
+@{
+    ViewData["Title"] = "Giriş Yap";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-5 col-lg-4">
+
+        <h1 class="text-center mb-4">@ViewData["Title"]</h1>
+
+        <section>
+            @**@
+            <form asp-action="Login" method="post">
+                <hr />
+
+                @**@
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                @* Kullanıcı Adı Alanı *@
+                <div class="form-floating mb-3">
+                    <input asp-for="Username" class="form-control" autocomplete="username" placeholder="Kullanıcı Adı" />
+                    <label asp-for="Username" class="form-label"></label>
+                    <span asp-validation-for="Username" class="text-danger"></span>
+                </div>
+
+                @* Şifre Alanı *@
+                <div class="form-floating mb-3">
+                    <input asp-for="Password" class="form-control" autocomplete="current-password" placeholder="Şifre" />
+                    <label asp-for="Password" class="form-label"></label>
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary btn-lg">Giriş Yap</button>
+                </div>
+                <div class="text-center mt-3">
+                    <p>
+                        Hesabınız yok mu? <a asp-action="Register">Hemen Kayıt Olun</a>
+                    </p>
+                </div>
+            </form>
+        </section>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

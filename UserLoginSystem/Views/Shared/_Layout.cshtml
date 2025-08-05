@@ -1,0 +1,99 @@
+﻿@* Bu satır, bu dosya içinde Session gibi Http'ye özel komutları kullanabilmemizi sağlar. *@
+@using Microsoft.AspNetCore.Http
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - AuthSystem</title>
+
+    @* Bootstrap CSS dosyasını projenin wwwroot klasöründen veya bir CDN'den çağırır. *@
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">AuthSystem</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    @* Sitenin Ana Menü Linkleri *@
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Ana Sayfa</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Gizlilik (Korumalı)</a>
+                        </li>
+                        @if (Context.Session.GetString("Role") == "Admin")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-danger fw-bold" asp-controller="Home" asp-action="UserManagement">Yönetim Paneli</a>
+                            </li>
+                        }
+                    </ul>
+
+                    @* =============================================================== *@
+                    @**@
+                    @**@
+                    <ul class="navbar-nav">
+                        @if (Context.Session.GetString("Username") != null)
+                        {
+                            // Eğer Session'da "Username" varsa, kullanıcı giriş yapmış demektir.
+
+                            <li class="nav-item">
+                                <span class="nav-link text-dark">Hoş Geldin, @Context.Session.GetString("Username")!</span>
+                            </li>
+                            <li class="nav-item">
+                                @* Logout işlemi bir POST isteği olmalıdır. Bu yüzden form içinde bir buton kullanıyoruz. *@
+                                <form class="form-inline" asp-controller="Account" asp-action="Logout" method="post">
+                                    <button type="submit" class="nav-link btn btn-link text-dark border-0">Çıkış Yap</button>
+                                </form>
+                            </li>
+                        }
+                        else
+                        {
+                            // Eğer Session'da "Username" yoksa, kullanıcı misafirdir.
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register">Kayıt Ol</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login">Giriş Yap</a>
+                            </li>
+                        }
+                    </ul>
+                    @* =============================================================== *@
+                    @* ==           KULLANICI OTURUM KONTROL MENÜSÜ BİTİŞ           == *@
+                    @* =============================================================== *@
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @* Burası çok önemli! Diğer tüm view'ların (.cshtml) içeriği bu satırın olduğu yere gelir. *@
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            © 2025 - AuthSystem - <a asp-area="" asp-controller="Home" asp-action="Privacy">Gizlilik</a>
+        </div>
+    </footer>
+
+    @* Gerekli JavaScript dosyaları *@
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @* Sayfalara özel scriptlerin (örneğin validation scriptleri) yükleneceği yer *@
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

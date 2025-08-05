@@ -1,0 +1,343 @@
+﻿
+@using Microsoft.AspNetCore.Http
+
+@{
+    ViewData["Title"] = "Ana Sayfa";
+}
+
+<style>
+    :root {
+        --primary-green: #5A6B4A;
+        --secondary-green: #6B7D5B;
+        --light-green: #8FA67F;
+        --accent-green: #4A5A3A;
+        --background-green: #F5F7F3;
+        --card-green: #FAFBF9;
+        --text-dark: #2C3E23;
+        --text-light: #6B7D5B;
+    }
+
+    body {
+        background: linear-gradient(135deg, var(--background-green) 0%, #FFFFFF 100%);
+        min-height: 100vh;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    .hero-section {
+        background: linear-gradient(135deg, var(--primary-green) 0%, var(--secondary-green) 100%);
+        border-radius: 20px;
+        box-shadow: 0 20px 60px rgba(90, 107, 74, 0.3);
+        color: white;
+        position: relative;
+        overflow: hidden;
+        margin-bottom: 3rem;
+    }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+            opacity: 0.3;
+        }
+
+    .hero-content {
+        position: relative;
+        z-index: 2;
+        padding: 4rem 2rem;
+    }
+
+    .hero-title {
+        font-size: 3.5rem;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        text-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        line-height: 1.1;
+    }
+
+    .hero-description {
+        font-size: 1.3rem;
+        opacity: 0.95;
+        margin-bottom: 2.5rem;
+        line-height: 1.6;
+        max-width: 70%;
+    }
+
+    .btn-modern {
+        padding: 1rem 2.5rem;
+        border-radius: 50px;
+        font-weight: 600;
+        text-decoration: none;
+        display: inline-block;
+        margin: 0.5rem;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        border: none;
+        font-size: 1.1rem;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+
+    .btn-primary-modern {
+        background: linear-gradient(135deg, #FFFFFF 0%, #F8F9FA 100%);
+        color: var(--primary-green);
+        border: 2px solid transparent;
+    }
+
+        .btn-primary-modern:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            color: var(--accent-green);
+        }
+
+    .btn-secondary-modern {
+        background: transparent;
+        color: white;
+        border: 2px solid rgba(255,255,255,0.3);
+    }
+
+        .btn-secondary-modern:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(255,255,255,0.6);
+            transform: translateY(-3px);
+            color: white;
+        }
+
+    .features-section {
+        padding: 4rem 0;
+    }
+
+    .feature-card {
+        background: var(--card-green);
+        padding: 2.5rem;
+        border-radius: 20px;
+        border: 1px solid rgba(90, 107, 74, 0.1);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        height: 100%;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(90, 107, 74, 0.05), transparent);
+            transition: left 0.6s;
+        }
+
+        .feature-card:hover::before {
+            left: 100%;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 60px rgba(90, 107, 74, 0.2);
+            border-color: var(--light-green);
+        }
+
+    .feature-icon {
+        width: 5rem;
+        height: 5rem;
+        background: linear-gradient(135deg, var(--primary-green) 0%, var(--secondary-green) 100%);
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 10px 30px rgba(90, 107, 74, 0.3);
+        transition: all 0.3s ease;
+    }
+
+    .feature-card:hover .feature-icon {
+        transform: scale(1.1) rotate(5deg);
+        box-shadow: 0 15px 40px rgba(90, 107, 74, 0.4);
+    }
+
+    .feature-title {
+        color: var(--text-dark);
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+    }
+
+    .feature-description {
+        color: var(--text-light);
+        line-height: 1.6;
+        font-size: 1rem;
+    }
+
+    .alert-modern {
+        background: linear-gradient(135deg, #FF6B6B 0%, #FF5252 100%);
+        border: none;
+        border-radius: 15px;
+        color: white;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 10px 30px rgba(255, 107, 107, 0.3);
+        font-weight: 500;
+    }
+
+    .container-modern {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+    }
+
+  
+
+    {
+        font-size: 2.5rem;
+    }
+
+    .hero-description {
+        font-size: 1.1rem;
+        max-width: 100%;
+    }
+
+    .btn-modern {
+        font-size: 1rem;
+        padding: 0.8rem 2rem;
+    }
+
+    .feature-card {
+        padding: 2rem;
+    }
+
+    }
+
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    }
+
+    .fade-in-up {
+        animation: fadeInUp 0.8s ease forwards;
+    }
+
+    .delay-1 {
+        animation-delay: 0.2s;
+    }
+
+    .delay-2 {
+        animation-delay: 0.4s;
+    }
+
+    .delay-3 {
+        animation-delay: 0.6s;
+    }
+</style>
+
+<div class="container-modern">
+    <div class="hero-section fade-in-up">
+        <div class="hero-content">
+            @if (Context.Session.GetString("Username") != null)
+            {
+                <h1 class="hero-title">Tekrar Hoş Geldin,<br>@Context.Session.GetString("Username")!</h1>
+                <p class="hero-description">
+                    Sisteme başarıyla giriş yaptın. Artık korumalı alanlara erişebilir,
+                    profilini yönetebilir ve tüm özelliklerden faydalanabilirsin.
+                </p>
+                <div class="hero-actions">
+                    <a asp-controller="Home" asp-action="Privacy" class="btn-modern btn-primary-modern">
+                        <i class="fas fa-shield-alt me-2"></i>Gizlilik Merkezi
+                    </a>
+                    <a href="#features" class="btn-modern btn-secondary-modern">
+                        <i class="fas fa-rocket me-2"></i>Özellikleri Keşfet
+                    </a>
+                </div>
+            }
+            else
+            {
+                <h1 class="hero-title">Güvenli Kimlik<br>Doğrulama Sistemi</h1>
+                <p class="hero-description">
+                    Modern teknolojilerle geliştirilmiş, güvenli ve kullanıcı dostu
+                    kimlik doğrulama platformuna hoş geldiniz. Hesabınızı oluşturun
+                    ve dijital dünyanızı güvence altına alın.
+                </p>
+                <div class="hero-actions">
+                    <a asp-controller="Account" asp-action="Login" class="btn-modern btn-primary-modern">
+                        <i class="fas fa-sign-in-alt me-2"></i>Giriş Yap
+                    </a>
+                    <a asp-controller="Account" asp-action="Register" class="btn-modern btn-secondary-modern">
+                        <i class="fas fa-user-plus me-2"></i>Hemen Kayıt Ol
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <div class="alert-modern fade-in-up" role="alert">
+            <i class="fas fa-exclamation-triangle me-2"></i>
+            @ViewBag.ErrorMessage
+        </div>
+    }
+
+    <section id="features" class="features-section">
+        <div class="row g-4">
+            <div class="col-lg-4 col-md-6 fade-in-up delay-1">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="32" height="32" fill="white" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M8 0c-.89 0-1.71.21-2.43.573a9.25 9.25 0 0 0-1.636 1.257l-.285.284c-.11.11-.22.226-.324.349-1.29 1.393-2.313 3.31-2.313 5.537 0 1.95.74 3.65 1.95 4.882.08.082.164.16.252.234.11.092.225.18.344.262l.162.115a9.3 9.3 0 0 0 1.636 1.257l.285.284a6.64 6.64 0 0 0 2.43.573c.89 0 1.71-.21 2.43-.573a9.3 9.3 0 0 0 1.636-1.257l.285-.284c.11-.11.22-.226.324-.349 1.29-1.393 2.313-3.31 2.313-5.537 0-1.95-.74-3.65-1.95-4.882a6.64 6.64 0 0 0-.596-.5l-.162-.115a9.25 9.25 0 0 0-1.636-1.257l-.285-.284A6.64 6.64 0 0 0 8 0zm-.5 9.293-1.354-1.353a.5.5 0 1 1 .708-.708l.999.999 2.001-2a.5.5 0 1 1 .707.708L8.207 9.293a.5.5 0 0 1-.707 0z" />
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Askeri Düzey Güvenlik</h3>
+                    <p class="feature-description">
+                        Şifreleriniz BCrypt algoritması ile hash'lenerek, askeri düzeyde güvenlik
+                        protokolleriyle korunur. Verileriniz hiçbir zaman ham metin olarak saklanmaz.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 fade-in-up delay-2">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="32" height="32" fill="white" viewBox="0 0 16 16">
+                            <path d="M6.5 2a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1h-3zM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                            <path d="M4.5 0A2.5 2.5 0 0 0 2 2.5v11A2.5 2.5 0 0 0 4.5 16h7a2.5 2.5 0 0 0 2.5-2.5v-11A2.5 2.5 0 0 0 11.5 0h-7zM3 2.5A1.5 1.5 0 0 1 4.5 1h7A1.5 1.5 0 0 1 13 2.5v11a1.5 1.5 0 0 1-1.5 1.5h-7A1.5 1.5 0 0 1 3 13.5v-11z" />
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Akıllı Oturum Yönetimi</h3>
+                    <p class="feature-description">
+                        Gelişmiş session teknolojisi ile kimliğiniz güvenli şekilde hatırlanır.
+                        Site içinde kesintisiz gezinme deneyimi yaşayın.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 fade-in-up delay-3">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="32" height="32" fill="white" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M15.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z" />
+                            <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Dinamik Rol Sistemi</h3>
+                    <p class="feature-description">
+                        Esnek rol bazlı yetkilendirme sistemi ile Admin, User ve özel roller.
+                        Her kullanıcı yetkisine göre farklı deneyim yaşar.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">

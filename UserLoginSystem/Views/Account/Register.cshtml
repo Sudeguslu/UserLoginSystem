@@ -1,0 +1,58 @@
+﻿@**@
+
+@**@
+@model UserLoginSystem.ViewModels.RegisterViewModel
+
+@{
+    ViewData["Title"] = "Kayıt Ol";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-5 col-lg-4">
+
+        <h1 class="text-center mb-4">@ViewData["Title"]</h1>
+        <h4 class="text-center text-muted mb-4">Yeni bir hesap oluşturun.</h4>
+
+        <form asp-action="Register" method="post">
+            <hr />
+
+            @**@
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+            @**@
+            <div class="form-floating mb-3">
+                <input asp-for="Username" class="form-control" placeholder="Kullanıcı Adı" />
+                <label asp-for="Username"></label>
+                <span asp-validation-for="Username" class="text-danger"></span>
+            </div>
+
+            @**@
+            <div class="form-floating mb-3">
+                <input asp-for="Email" class="form-control" placeholder="E-posta Adresi" />
+                <label asp-for="Email"></label>
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            @**@
+            <div class="form-floating mb-3">
+                <input asp-for="Password" class="form-control" placeholder="Şifre" />
+                <label asp-for="Password"></label>
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input asp-for="ConfirmPassword" class="form-control" placeholder="Şifreyi Onayla" />
+                <label asp-for="ConfirmPassword"></label>
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+            <div class="d-grid">
+                <button type="submit" class="btn btn-primary btn-lg">Hesap Oluştur</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@**@
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
