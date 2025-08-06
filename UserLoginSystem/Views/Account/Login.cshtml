@@ -1,48 +1,245 @@
-﻿@**@
-
-@**@
-@model UserLoginSystem.ViewModels.LoginViewModel
-
+﻿@model UserLoginSystem.ViewModels.LoginViewModel
 @{
     ViewData["Title"] = "Giriş Yap";
 }
 
+<style>
+    :root {
+        --khaki-primary: #606c38;
+        --khaki-secondary: #7d8751;
+        --khaki-light: #a2aa6b;
+        --khaki-dark: #4a5428;
+        --cream: #fefae0;
+        --warm-white: #f7f5f3;
+        --text-dark: #2d3436;
+        --text-muted: #636e72;
+        --shadow-light: rgba(96, 108, 56, 0.1);
+        --shadow-medium: rgba(96, 108, 56, 0.15);
+        --shadow-heavy: rgba(96, 108, 56, 0.25);
+    }
+
+    body {
+        background: linear-gradient(135deg, var(--cream) 0%, var(--warm-white) 100%);
+        min-height: 100vh;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .auth-container {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 3rem 2.5rem;
+        box-shadow: 0 20px 40px var(--shadow-light), 0 15px 12px var(--shadow-medium);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        position: relative;
+        overflow: hidden;
+        margin-top: 5vh;
+    }
+
+        .auth-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--khaki-primary), var(--khaki-light), var(--khaki-primary));
+        }
+
+    .auth-header {
+        margin-bottom: 2.5rem;
+    }
+
+    .auth-icon {
+        width: 64px;
+        height: 64px;
+        margin: 0 auto 1rem;
+        padding: 16px;
+        background: linear-gradient(135deg, var(--khaki-primary), var(--khaki-secondary));
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 8px 20px var(--shadow-medium);
+        transition: transform 0.3s ease;
+    }
+
+        .auth-icon:hover {
+            transform: translateY(-2px);
+        }
+
+        .auth-icon svg {
+            fill: white;
+            width: 32px;
+            height: 32px;
+        }
+
+    .auth-title {
+        color: var(--text-dark);
+        font-weight: 600;
+        font-size: 1.75rem;
+        margin: 0;
+        letter-spacing: -0.5px;
+    }
+
+    .form-floating {
+        margin-bottom: 1.5rem;
+    }
+
+        .form-floating > .form-control {
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 1rem 0.75rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+
+            .form-floating > .form-control:focus {
+                border-color: var(--khaki-primary);
+                box-shadow: 0 0 0 0.2rem rgba(96, 108, 56, 0.15);
+                background-color: white;
+            }
+
+        .form-floating > label {
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .form-floating > .form-control:focus ~ label,
+        .form-floating > .form-control:not(:placeholder-shown) ~ label {
+            color: var(--khaki-primary);
+            font-weight: 600;
+        }
+
+    .btn-login {
+        background: linear-gradient(135deg, var(--khaki-primary), var(--khaki-secondary));
+        border: none;
+        border-radius: 12px;
+        padding: 1rem 2rem;
+        font-size: 1.1rem;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        color: white;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .btn-login:hover {
+            background: linear-gradient(135deg, var(--khaki-dark), var(--khaki-primary));
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px var(--shadow-heavy);
+            color: white;
+        }
+
+        .btn-login:active {
+            transform: translateY(0);
+        }
+
+    .register-link {
+        color: var(--text-muted);
+        font-size: 0.95rem;
+        margin-top: 2rem;
+    }
+
+        .register-link a {
+            color: var(--khaki-primary);
+            text-decoration: none;
+            font-weight: 600;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+            .register-link a:hover {
+                color: var(--khaki-dark);
+                border-bottom-color: var(--khaki-primary);
+            }
+
+    .text-danger {
+        color: #dc3545 !important;
+        font-size: 0.875rem;
+        font-weight: 500;
+        margin-top: 0.25rem;
+    }
+
+    .validation-summary {
+        background-color: rgba(220, 53, 69, 0.1);
+        border: 1px solid rgba(220, 53, 69, 0.2);
+        border-radius: 8px;
+        padding: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .auth-title {
+        font-size: 1.5rem;
+    }
+
+    }
+
+    .auth-container {
+        animation: fadeInUp 0.6s ease-out;
+    }
+
+    .form-floating {
+        animation: fadeInUp 0.6s ease-out;
+        animation-fill-mode: both;
+    }
+
+        .form-floating:nth-child(2) {
+            animation-delay: 0.1s;
+        }
+
+        .form-floating:nth-child(3) {
+            animation-delay: 0.2s;
+        }
+
+    .btn-login {
+        animation: fadeInUp 0.6s ease-out 0.3s both;
+    }
+
+    .register-link {
+        animation: fadeInUp 0.6s ease-out 0.4s both;
+    }
+</style>
+
 <div class="row justify-content-center">
-    <div class="col-md-5 col-lg-4">
+    <div class="col-md-5 col-lg-4 auth-container">
+        <div class="text-center auth-header">
+            <div class="auth-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 0c-.89 0-1.71.21-2.43.573a9.25 9.25 0 0 0-1.636 1.257l-.285.284c-.11.11-.22.226-.324.349-1.29 1.393-2.313 3.31-2.313 5.537 0 1.95.74 3.65 1.95 4.882.08.082.164.16.252.234.11.092.225.18.344.262l.162.115a9.3 9.3 0 0 0 1.636 1.257l.285.284a6.64 6.64 0 0 0 2.43.573c.89 0 1.71-.21 2.43-.573a9.3 9.3 0 0 0 1.636-1.257l.285-.284c.11-.11.22-.226.324-.349 1.29-1.393 2.313-3.31 2.313-5.537 0-1.95-.74-3.65-1.95-4.882a6.64 6.64 0 0 0-.596-.5l-.162-.115a9.25 9.25 0 0 0-1.636-1.257l-.285-.284A6.64 6.64 0 0 0 8 0zm-.5 9.293-1.354-1.353a.5.5 0 1 1 .708-.708l.999.999 2.001-2a.5.5 0 1 1 .707.708L8.207 9.293a.5.5 0 0 1-.707 0z" />
+                </svg>
+            </div>
+            <h1 class="auth-title">@ViewData["Title"]</h1>
+        </div>
 
-        <h1 class="text-center mb-4">@ViewData["Title"]</h1>
+        <form asp-action="Login" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger validation-summary text-center"></div>
 
-        <section>
-            @**@
-            <form asp-action="Login" method="post">
-                <hr />
+            <div class="form-floating">
+                <input asp-for="Username" class="form-control" placeholder="Kullanıcı Adı" />
+                <label asp-for="Username">Kullanıcı Adı</label>
+                <span asp-validation-for="Username" class="text-danger"></span>
+            </div>
 
-                @**@
-                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+            <div class="form-floating">
+                <input asp-for="Password" class="form-control" type="password" placeholder="Şifre" />
+                <label asp-for="Password">Şifre</label>
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
 
-                @* Kullanıcı Adı Alanı *@
-                <div class="form-floating mb-3">
-                    <input asp-for="Username" class="form-control" autocomplete="username" placeholder="Kullanıcı Adı" />
-                    <label asp-for="Username" class="form-label"></label>
-                    <span asp-validation-for="Username" class="text-danger"></span>
-                </div>
+            <div class="d-grid">
+                <button type="submit" class="btn btn-login">Giriş Yap</button>
+            </div>
 
-                @* Şifre Alanı *@
-                <div class="form-floating mb-3">
-                    <input asp-for="Password" class="form-control" autocomplete="current-password" placeholder="Şifre" />
-                    <label asp-for="Password" class="form-label"></label>
-                    <span asp-validation-for="Password" class="text-danger"></span>
-                </div>
-                <div class="d-grid">
-                    <button type="submit" class="btn btn-primary btn-lg">Giriş Yap</button>
-                </div>
-                <div class="text-center mt-3">
-                    <p>
-                        Hesabınız yok mu? <a asp-action="Register">Hemen Kayıt Olun</a>
-                    </p>
-                </div>
-            </form>
-        </section>
+            <div class="text-center register-link">
+                <p>
+                    Hesabınız yok mu? <a asp-action="Register">Hemen Kayıt Olun</a>
+                </p>
+            </div>
+        </form>
     </div>
 </div>
 

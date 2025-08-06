@@ -7,7 +7,7 @@ using UserLoginSystem.Models;
 using UserLoginSystem.ViewModels;
 using BCrypt.Net;
 
-namespace AuthSystem.Controllers
+namespace UserLoginSystem.Controllers
 {
     public class AccountController : Controller
     {

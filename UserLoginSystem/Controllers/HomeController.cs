@@ -3,8 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using UserLoginSystem.Models;
 using UserLoginSystem.Data;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
 
 namespace UserLoginSystem.Controllers
 {

@@ -1,58 +1,349 @@
-﻿@**@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kayıt Ol - Modern Tasarım</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-khaki: #8B7355;
+            --light-khaki: #A68B5B;
+            --dark-khaki: #6B5B47;
+            --accent-khaki: #9D8B6A;
+            --bg-gradient: linear-gradient(135deg, #f5f3f0 0%, #e8e4df 100%);
+            --card-shadow: 0 20px 40px rgba(139, 115, 85, 0.15);
+            --input-shadow: 0 4px 15px rgba(139, 115, 85, 0.08);
+        }
 
-@**@
-@model UserLoginSystem.ViewModels.RegisterViewModel
+        body {
+            background: var(--bg-gradient);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            position: relative;
+            overflow-x: hidden;
+        }
 
-@{
-    ViewData["Title"] = "Kayıt Ol";
-}
+            body::before {
+                content: '';
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: radial-gradient(circle at 20% 20%, rgba(139, 115, 85, 0.05) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(166, 139, 91, 0.05) 0%, transparent 50%), radial-gradient(circle at 40% 60%, rgba(157, 139, 106, 0.03) 0%, transparent 50%);
+                pointer-events: none;
+                z-index: -1;
+            }
 
-<div class="row justify-content-center">
-    <div class="col-md-5 col-lg-4">
+        .auth-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            box-shadow: var(--card-shadow);
+            padding: 3rem 2.5rem;
+            margin-top: 5vh;
+            margin-bottom: 5vh;
+            border: 1px solid rgba(139, 115, 85, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
 
-        <h1 class="text-center mb-4">@ViewData["Title"]</h1>
-        <h4 class="text-center text-muted mb-4">Yeni bir hesap oluşturun.</h4>
+            .auth-container::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 4px;
+                background: linear-gradient(90deg, var(--primary-khaki), var(--light-khaki), var(--accent-khaki));
+            }
 
-        <form asp-action="Register" method="post">
-            <hr />
+            .auth-container h1 {
+                color: var(--dark-khaki);
+                font-weight: 700;
+                font-size: 2.2rem;
+                margin-bottom: 0.5rem;
+                position: relative;
+            }
 
-            @**@
-            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+            .auth-container h4 {
+                color: var(--accent-khaki);
+                font-weight: 400;
+                font-size: 1rem;
+                margin-bottom: 2.5rem;
+            }
 
-            @**@
-            <div class="form-floating mb-3">
-                <input asp-for="Username" class="form-control" placeholder="Kullanıcı Adı" />
-                <label asp-for="Username"></label>
-                <span asp-validation-for="Username" class="text-danger"></span>
+        .form-floating {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+            .form-floating > .form-control {
+                border: 2px solid rgba(139, 115, 85, 0.15);
+                border-radius: 16px;
+                padding: 1rem 1.25rem;
+                font-size: 1rem;
+                background: rgba(255, 255, 255, 0.8);
+                backdrop-filter: blur(10px);
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                box-shadow: var(--input-shadow);
+                height: calc(3.5rem + 2px);
+            }
+
+                .form-floating > .form-control:focus {
+                    border-color: var(--primary-khaki);
+                    box-shadow: 0 0 0 0.25rem rgba(139, 115, 85, 0.15), 0 8px 25px rgba(139, 115, 85, 0.12);
+                    background: rgba(255, 255, 255, 0.95);
+                    transform: translateY(-2px);
+                }
+
+            .form-floating > label {
+                color: var(--accent-khaki);
+                font-weight: 500;
+                padding: 1rem 1.25rem;
+                font-size: 0.9rem;
+                transition: all 0.3s ease;
+            }
+
+            .form-floating > .form-control:focus ~ label,
+            .form-floating > .form-control:not(:placeholder-shown) ~ label {
+                color: var(--primary-khaki);
+                font-weight: 600;
+                font-size: 0.8rem;
+            }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-khaki) 0%, var(--light-khaki) 100%);
+            border: none;
+            border-radius: 16px;
+            padding: 1rem 2rem;
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 8px 20px rgba(139, 115, 85, 0.25);
+            position: relative;
+            overflow: hidden;
+        }
+
+            .btn-primary::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+                transition: left 0.5s;
+            }
+
+            .btn-primary:hover {
+                background: linear-gradient(135deg, var(--light-khaki) 0%, var(--primary-khaki) 100%);
+                transform: translateY(-3px);
+                box-shadow: 0 12px 30px rgba(139, 115, 85, 0.35);
+            }
+
+                .btn-primary:hover::before {
+                    left: 100%;
+                }
+
+            .btn-primary:active {
+                transform: translateY(-1px);
+            }
+
+        .login-link {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-top: 2rem;
+        }
+
+            .login-link a {
+                color: var(--khaki-primary);
+                text-decoration: none;
+                font-weight: 600;
+                border-bottom: 2px solid transparent;
+                transition: all 0.3s ease;
+            }
+
+                .login-link a:hover {
+                    color: var(--khaki-dark);
+                    border-bottom-color: var(--khaki-primary);
+                }
+
+        .text-danger {
+            color: #dc3545 !important;
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+            font-weight: 500;
+        }
+
+        hr {
+            border: none;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent-khaki), transparent);
+            margin: 1.5rem 0;
+            opacity: 0.3;
+        }
+
+        .auth-container {
+            animation: slideInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .form-floating {
+            animation: slideInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            animation-fill-mode: both;
+        }
+
+            .form-floating:nth-child(1) {
+                animation-delay: 0.1s;
+            }
+
+            .form-floating:nth-child(2) {
+                animation-delay: 0.2s;
+            }
+
+            .form-floating:nth-child(3) {
+                animation-delay: 0.3s;
+            }
+
+            .form-floating:nth-child(4) {
+                animation-delay: 0.4s;
+            }
+
+        .d-grid {
+            animation: slideInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.5s both;
+        }
+
+        {
+            margin: 2vh 1rem;
+            padding: 2rem 1.5rem;
+            border-radius: 20px;
+        }
+
+        .auth-container h1 {
+            font-size: 1.8rem;
+        }
+
+        .form-floating > .form-control {
+            padding: 0.875rem 1rem;
+            font-size: 0.95rem;
+        }
+
+        .btn-primary {
+            padding: 0.875rem 1.5rem;
+            font-size: 1rem;
+        }
+
+        }
+
+        /* Focus indicator */
+        .form-floating > .form-control:focus {
+            outline: none;
+        }
+
+        /* Placeholder styling */
+        .form-floating > .form-control::placeholder {
+            color: transparent;
+        }
+
+        /* Hover effects */
+        .form-floating > .form-control:hover:not(:focus) {
+            border-color: rgba(139, 115, 85, 0.25);
+            background: rgba(255, 255, 255, 0.9);
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row justify-content-center align-items-center min-vh-100">
+            <div class="col-md-5 col-lg-4">
+                <div class="auth-container">
+                    <h1 class="text-center mb-2">
+                        <i class="fas fa-user-plus me-2" style="color: var(--primary-khaki);"></i>
+                        Kayıt Ol
+                    </h1>
+                    <h4 class="text-center mb-4">Yeni bir hesap oluşturun</h4>
+
+                    <form method="post">
+                        <hr />
+
+                        <div class="form-floating">
+                            <input type="text" class="form-control" id="Username" name="Username" placeholder="Kullanıcı Adı" required />
+                            <label for="Username">
+                                <i class="fas fa-user me-2"></i>Kullanıcı Adı
+                            </label>
+                            <span class="text-danger"></span>
+                        </div>
+
+                        <div class="form-floating">
+                            <input type="email" class="form-control" id="Email" name="Email" placeholder="E-posta Adresi" required />
+                            <label for="Email">
+                                <i class="fas fa-envelope me-2"></i>E-posta Adresi
+                            </label>
+                            <span class="text-danger"></span>
+                        </div>
+
+                        <div class="form-floating">
+                            <input type="password" class="form-control" id="Password" name="Password" placeholder="Şifre" required />
+                            <label for="Password">
+                                <i class="fas fa-lock me-2"></i>Şifre
+                            </label>
+                            <span class="text-danger"></span>
+                        </div>
+
+                        <div class="form-floating">
+                            <input type="password" class="form-control" id="ConfirmPassword" name="ConfirmPassword" placeholder="Şifreyi Onayla" required />
+                            <label for="ConfirmPassword">
+                                <i class="fas fa-lock me-2"></i>Şifreyi Onayla
+                            </label>
+                            <span class="text-danger"></span>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-user-plus me-2"></i>
+                                Hesap Oluştur
+                            </button>
+                        </div>
+                    </form>
+
+                    <div class="text-center login-link">
+                        <p class="text-muted">
+                            Zaten hesabınız var mı? <a asp-action="Login">Giriş Yapın</a>
+                        </p>
+                    </div>
+                </div>
             </div>
-
-            @**@
-            <div class="form-floating mb-3">
-                <input asp-for="Email" class="form-control" placeholder="E-posta Adresi" />
-                <label asp-for="Email"></label>
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-
-            @**@
-            <div class="form-floating mb-3">
-                <input asp-for="Password" class="form-control" placeholder="Şifre" />
-                <label asp-for="Password"></label>
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-
-            <div class="form-floating mb-3">
-                <input asp-for="ConfirmPassword" class="form-control" placeholder="Şifreyi Onayla" />
-                <label asp-for="ConfirmPassword"></label>
-                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-            </div>
-            <div class="d-grid">
-                <button type="submit" class="btn btn-primary btn-lg">Hesap Oluştur</button>
-            </div>
-        </form>
+        </div>
     </div>
-</div>
 
-@**@
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.querySelector('form');
+            const inputs = document.querySelectorAll('.form-control');
+            inputs.forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.parentElement.style.transform = 'scale(1.02)';
+                });
+
+                input.addEventListener('blur', function() {
+                    this.parentElement.style.transform = 'scale(1)';
+                });
+            });
+            form.addEventListener('submit', function(e) {
+                const submitBtn = this.querySelector('button[type="submit"]');
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Hesap Oluşturuluyor...';
+                submitBtn.disabled = true;
+                setTimeout(() => {
+                    submitBtn.innerHTML = '<i class="fas fa-user-plus me-2"></i>Hesap Oluştur';
+                    submitBtn.disabled = false;
+                }, 2000);
+            });
+        });
+    </script>
+</body>
+</html>

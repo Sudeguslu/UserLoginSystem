@@ -1,7 +1,7 @@
-﻿using UserLoginSystem;
+﻿using UserLoginSystem.Core;
 using Microsoft.EntityFrameworkCore;
 
-namespace UserLoginSystem.Data
+namespace UserLoginSystem.Core.Data
 {
 
 
@@ -10,7 +10,7 @@ namespace UserLoginSystem.Data
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }
-        public DbSet<Models.User> Users { get; set; }
+        public DbSet<User> Users { get; set; }
     }
 }
 
